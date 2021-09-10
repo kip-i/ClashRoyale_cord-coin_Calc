@@ -3,100 +3,40 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <title>クラロワカードコイン計算機</title>
 </head>
 
 <body>
     <div class="container">
-        aaaaaaa
+        <h2>クラロワカードコイン計算機</h2>
+        <div id="account_num_description">
+            <input type="num" id="account_form" placeholder="アカウント数を入力してください.">
+        </div>
     </div>
 </body>
+<script>
+    //enter押したらvalueを取得
+    var get_account_num = document.getElementById('account_form');
+    get_account_num.addEventListener('keypress', get_accountnum);
+    var descroption = document.getElementById('account_num_description');
+    var account_num;
+    var cards = ['Skeletons', 'Ice Spirit', 'Fire Spirit', 'Electro Spirit', 'Gpblins', 'Bomber', 'Spear Goblins', 'Bats', 'Zap', 'Giant Snowball', 'Knight', 'Archers', 'Minions', 'Goblin Gang', 'Skeleton Barrel', 'Firecracker', 'Cannon', 'Arrows', 'Royal Dellvery', 'Skeleton Dragons', 'Mortar', 'Tesla', 'Barbarians', 'Minion Horde', 'Rascals', 'Royal Giant', 'Elite Barbarians', 'Royal Recruits', 'Heal Spirit', 'Ice Golem', 'Mega Minion', 'Dart Goblin', 'Elixir Golem', 'Tombstone', 'Earthquake', 'Valkyrie', 'Musketeer', 'Mini P.E.K.K.A', 'Hogrider', 'Battle Ram', 'Zappies', 'Flying Machine', 'Battle Healer', 'Bomb Tower', 'Furnace', 'Goboin Cage', 'Fireball', 'Giant', 'Wizard', 'Royal Hogs', 'Goblin Hut', 'Inferno Tower', 'Elixir Collector', 'Rocket', 'Barbarian Hut', 'Three Muscketeers', 'Mirror', 'Wall Braekers', 'Rage', 'Barbaarian Barrel', 'Skeleton Army', 'Guards', 'Goblin Barrel', 'Tornado', 'Clone', 'Baby Dragon', 'Dark Prince', 'Hunter', 'Goblin Drill', 'Freeze', 'Poison', 'Balloon', 'Witch', 'Exeutioner', 'Prince', 'Bowler', 'Cannon Cart', 'Electro Dragon', 'Giant Skeleton', 'Goblin Giant', 'X-Bow', 'Lightning', 'P.E.K.K.A', 'Golem', 'Electro Giant', 'Thelog', 'Ice Wizard', 'Princess', 'Miner', 'Bandit', 'Royal Ghost', 'Fisherman', 'Lumberjack', 'Infernd Dragon', 'Electro Wizard', 'Night Witch', 'Magic Archer', 'Mother Wigtch', 'Ram Rider', 'Graveyard', 'Sparky', 'Lava Hound', 'Mega Knight']
+    function get_accountnum(e) {
+        if (e.keyCode === 13) {
+            account_num = get_account_num.value;
+            descroption.removeChild(get_account_num);
+
+        }
+    }
+</script>
 <style>
     body {
         background: rgb(83, 98, 110);
         color: rgb(64, 251, 43);
     }
 
-
-
-    a:link {
-        color: rgb(64, 251, 43);
-    }
-
-    a:visited {
-        color: rgb(64, 251, 43);
-    }
-
-    a:hover {
-        color: aliceblue;
-    }
-
-    #header {
-        color: rgb(255, 255, 255);
-    }
-
-    #table-of-contents {
-        width: calc(20%);
-    }
-
-    #table-of-contents-sticky {
-        width: calc(95%);
-        position: sticky;
-        top: 20px;
-        background: rgb(45, 48, 62);
-        color: rgb(64, 251, 43);
-        margin: 0 auto;
-        padding-left: 15px;
-        line-height: 200%;
-    }
-
-
-    #contents {
-        width: calc(79.4%);
-        margin: 0 0 0 auto;
-    }
-
-    .article {
-        background: rgb(45, 48, 62);
-        color: rgb(64, 251, 43);
-    }
-
-    .center1 {
-        padding-left: 15px;
-    }
-
-    .division {
-        display: flex;
-
-    }
-
-    .left2free {
-        border-right: 1px solid rgb(192, 192, 192);
-        padding-left: 15px;
-        padding-right: 25px;
-    }
-
-    .left2 {
-        width: calc(50%);
-        border-right: 1px solid rgb(0, 0, 0);
-        padding-left: 15px;
-    }
-
-    .right2 {
-        width: calc(50%);
-        padding-left: 15px;
-    }
-
-    table.code {
-        text-align: left;
-        background: rgb(246, 246, 246);
-        color: rgb(0, 0, 0);
-        padding-right: 5rem;
-    }
-
-    #footer {
-        background: rgb(45, 48, 62);
-        padding-left: 100px;
+    input {
+        width: 16em;
     }
 </style>
 
