@@ -38,8 +38,9 @@
     }
     var description = document.getElementById('description');
     function get_card_num(num) {
-        var txt = document.createTextNode(cards_name[i] + 'のレベルを入力してください');
+        var txt = document.createTextNode(cards_name[i] + 'のレベルを入力してください.');
         description.appendChild(txt);
+        description.appendChild(document.createElement('br'));
         var input = document.createElement('input');
         input.setAttribute('id', 'input' + num);
         input.setAttribute('type', 'range');
