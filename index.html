@@ -17,7 +17,9 @@
 </body>
 <script>
     //enter押したらvalueを取得
+    //総カード数
     var crashroyal_cards = 103;
+
     var get_range = document.getElementById('rangec');
     var get_account_num = document.getElementById('account_form');
     get_account_num.addEventListener('keypress', get_accountnum);
@@ -47,7 +49,10 @@
         input.setAttribute('min', '1');
         input.setAttribute('max', 'max');
         input.setAttribute('step', '1');
+        description.appendChild(input);
+        description.appendChild(document.createElement('br'));
     }
+
 
 
 </script>
