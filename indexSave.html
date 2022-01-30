@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>クラロワカードコイン計算機</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>クラロワカードコイン計算機</h2>
+        <div id="account_num_description">
+            <p id="account_level"></p>
+            <input type="num" id="account_form" placeholder="アカウント数を入力してください.">
+            <p id="description"></p>
+        </div>
+    </div>
+</body>
+<script>
+    //アカウント入力のinput欄,enterでget_accountnum
+    var get_account_num = document.getElementById('account_form');
+    get_account_num.addEventListener('keypress', get_accountnum);
+    //現在のアカウント数を表示するためのDOM
+    var set_account = document.getElementById('account_level');
+
+    //カードのレベルの最大値
+    const MAXCARDLEVEL = 14;
+    //説明
+    var descroptions = document.getElementById('account_num_description');
+    //説明のDOS
+    var description = document.getElementById('description');
+    //アカウントの数
+    var account_num;
+    //カードの名前
+    var cards_name = ['Skeletons', 'Ice Spirit', 'Fire Spirit', 'Electro Spirit', 'Gpblins', 'Bomber', 'Spear Goblins', 'Bats', 'Zap', 'Giant Snowball', 'Knight', 'Archers', 'Minions', 'Goblin Gang', 'Skeleton Barrel', 'Firecracker', 'Cannon', 'Arrows', 'Royal Dellvery', 'Skeleton Dragons', 'Mortar', 'Tesla', 'Barbarians', 'Minion Horde', 'Rascals', 'Royal Giant', 'Elite Barbarians', 'Royal Recruits', 'Heal Spirit', 'Ice Golem', 'Mega Minion', 'Dart Goblin', 'Elixir Golem', 'Tombstone', 'Earthquake', 'Valkyrie', 'Musketeer', 'Mini P.E.K.K.A', 'Hogrider', 'Battle Ram', 'Zappies', 'Flying Machine', 'Battle Healer', 'Bomb Tower', 'Furnace', 'Goboin Cage', 'Fireball', 'Giant', 'Wizard', 'Royal Hogs', 'Goblin Hut', 'Inferno Tower', 'Elixir Collector', 'Rocket', 'Barbarian Hut', 'Three Muscketeers', 'Mirror', 'Wall Braekers', 'Rage', 'Barbaarian Barrel', 'Skeleton Army', 'Guards', 'Goblin Barrel', 'Tornado', 'Clone', 'Baby Dragon', 'Dark Prince', 'Hunter', 'Goblin Drill', 'Freeze', 'Poison', 'Balloon', 'Witch', 'Exeutioner', 'Prince', 'Bowler', 'Cannon Cart', 'Electro Dragon', 'Giant Skeleton', 'Goblin Giant', 'X-Bow', 'Lightning', 'P.E.K.K.A', 'Golem', 'Electro Giant', 'Thelog', 'Ice Wizard', 'Princess', 'Miner', 'Bandit', 'Royal Ghost', 'Fisherman', 'Lumberjack', 'Infernd Dragon', 'Electro Wizard', 'Night Witch', 'Magic Archer', 'Mother Wigtch', 'Ram Rider', 'Graveyard', 'Sparky', 'Lava Hound', 'Mega Knight'];
+    //総カード数
+    var crashroyal_cards = cards_name.length;
+    var cards_num = [];
+    var i = 0;
+    //アカウント数取得
+    function get_accountnum(e) {
+        if (e.keyCode === 13) {
+            //アカウント数
+            account_num = get_account_num.value;
+            //input欄の削除
+            descroptions.removeChild(get_account_num);
+
+            var txt = document.createTextNode(cards_name[crashroyal_cards] + 'のレベルは');
+            descriptions.appendChild(txt);
+            var span = document.createElement('span');
+            span.setAttribute('id', 'cardLevel');
+            descriptions.appendChild(span);
+            descriptions.appendChild(document.createElement('br'));
+            var input = document.createElement('input');
+            input.setAttribute('id', 'input' + account_num + crashroyal_cards);
+            input.setAttribute('type', 'range');
+            input.setAttribute('min', '1');
+            input.setAttribute('max', MAXCARDLEVEL);
+            input.setAttribute('step', '1');
+            description.appendChild(input);
+            description.appendChild(document.createElement('br'));
+
+
+
+        }
+    }
+    //説明のDOS
+    var description = document.getElementById('description');
+    /*
+        各カードinput欄生成
+    */
+    function get_card_num(account_num, crashroyal_cards) {
+        var txt = document.createTextNode(cards_name[crashroyal_cards] + 'のレベルは.');
+        description.appendChild(txt);
+        description.appendChild(document.createElement('br'));
+        var input = document.createElement('input');
+        input.setAttribute('id', 'input' + account_num + crashroyal_cards);
+        input.setAttribute('type', 'range');
+        input.setAttribute('min', '1');
+        input.setAttribute('max', MAXCARDLEVEL);
+        input.setAttribute('step', '1');
+        description.appendChild(input);
+        description.appendChild(document.createElement('br'));
+    }
+
+
+
+</script>
+<style>
+    body {
+        background: rgb(83, 98, 110);
+        color: rgb(64, 251, 43);
+    }
+
+    input {
+        width: 16em;
+    }
+</style>
+
+</html>
+<!--  1つのコンテンツのコード  -->
+<!--
+<div id=** class="content">
+                <div id=left>
+                    **
+                </div>
+                <div id=right>
+                    **
+                </div>
+            </div>
+-->
+
+<!--  サンプルコードの枠のコード  -->
+<!--
+    <table border="1" class="code">
+        <tr>
+            <th>&lt;&gt;</th>
+        </tr>
+    </table>
+-->
+
+<!-- tabのコード -->
+<!--
+    &nbsp;&nbsp;&nbsp;&nbsp;
+-->
+
+<!--  table-of-contentsのコード  -->
+<!--
+    <a href="#**">**</a><br>
+-->
+
+<!-- ▶︎のサンプルコード -->
+<!--
+    <details>
+        <summary>&nbsp;</summary>
+    </details>
+-->

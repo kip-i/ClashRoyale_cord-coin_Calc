@@ -9,52 +9,43 @@
 <body>
     <div class="container">
         <h2>クラロワカードコイン計算機</h2>
-        <div id="account_num_description">
-            <input type="num" id="account_form" placeholder="アカウント数を入力してください.">
-            <p id="description"></p>
+        <div id="account_num_form">
+            <input type="num" id="account_num_input" placeholder="アカウント数を入力してください.">
         </div>
+        <div id=card_input></div>
     </div>
 </body>
 <script>
-    //enter押したらvalueを取得
-    //総カード数
-    var crashroyal_cards = 103;
-
-    var get_range = document.getElementById('rangec');
-    var get_account_num = document.getElementById('account_form');
-    get_account_num.addEventListener('keypress', get_accountnum);
-    var descroptions = document.getElementById('account_num_description');
+    //アカウント数
     var account_num;
-    var cards_name = ['Skeletons', 'Ice Spirit', 'Fire Spirit', 'Electro Spirit', 'Gpblins', 'Bomber', 'Spear Goblins', 'Bats', 'Zap', 'Giant Snowball', 'Knight', 'Archers', 'Minions', 'Goblin Gang', 'Skeleton Barrel', 'Firecracker', 'Cannon', 'Arrows', 'Royal Dellvery', 'Skeleton Dragons', 'Mortar', 'Tesla', 'Barbarians', 'Minion Horde', 'Rascals', 'Royal Giant', 'Elite Barbarians', 'Royal Recruits', 'Heal Spirit', 'Ice Golem', 'Mega Minion', 'Dart Goblin', 'Elixir Golem', 'Tombstone', 'Earthquake', 'Valkyrie', 'Musketeer', 'Mini P.E.K.K.A', 'Hogrider', 'Battle Ram', 'Zappies', 'Flying Machine', 'Battle Healer', 'Bomb Tower', 'Furnace', 'Goboin Cage', 'Fireball', 'Giant', 'Wizard', 'Royal Hogs', 'Goblin Hut', 'Inferno Tower', 'Elixir Collector', 'Rocket', 'Barbarian Hut', 'Three Muscketeers', 'Mirror', 'Wall Braekers', 'Rage', 'Barbaarian Barrel', 'Skeleton Army', 'Guards', 'Goblin Barrel', 'Tornado', 'Clone', 'Baby Dragon', 'Dark Prince', 'Hunter', 'Goblin Drill', 'Freeze', 'Poison', 'Balloon', 'Witch', 'Exeutioner', 'Prince', 'Bowler', 'Cannon Cart', 'Electro Dragon', 'Giant Skeleton', 'Goblin Giant', 'X-Bow', 'Lightning', 'P.E.K.K.A', 'Golem', 'Electro Giant', 'Thelog', 'Ice Wizard', 'Princess', 'Miner', 'Bandit', 'Royal Ghost', 'Fisherman', 'Lumberjack', 'Infernd Dragon', 'Electro Wizard', 'Night Witch', 'Magic Archer', 'Mother Wigtch', 'Ram Rider', 'Graveyard', 'Sparky', 'Lava Hound', 'Mega Knight'];
-    var cards_num = [];
-    var i = 0;
-    function get_accountnum(e) {
+    //アカウント入力のinput欄,enterでget_account_num_input
+    var get_account_num_input = document.getElementById("account_num_input");
+    get_account_num_input.addEventListener("keypress", get_account_num);
+    //アカウント入力のinput欄,enterでget_account_num_form
+    var get_account_num_form = document.getElementById("account_num_form");
+    //カードのレベルのinput
+    var card_input = document.getElementById("card_input");
+    //アカウント数取得
+    function get_account_num(e) {
         if (e.keyCode === 13) {
-            account_num = get_account_num.value;
-            descroptions.removeChild(get_account_num);
-            //get_card_num();
-            for (i = 0; i < crashroyal_cards; i++) {
-                get_card_num(i);
-            }
+            //input欄の取得
+            account_num = get_account_num_input.value;
+            //input欄の削除
+            get_account_num_form.removeChild(get_account_num_input);
+            //カードレベルのinput欄作成
+            make_card_input();
         }
     }
-    var description = document.getElementById('description');
-    function get_card_num(num) {
-        var txt = document.createTextNode(cards_name[i] + 'のレベルを入力してください.');
-        description.appendChild(txt);
-        description.appendChild(document.createElement('br'));
-        var input = document.createElement('input');
-        input.setAttribute('id', 'input' + num);
-        input.setAttribute('type', 'range');
-        input.setAttribute('min', '1');
-        input.setAttribute('max', 'max');
-        input.setAttribute('step', '1');
-        description.appendChild(input);
-        description.appendChild(document.createElement('br'));
+    function make_card_input() {
+        for (var i = 0; i < account_num; i++) {
+            //アカウントNo.を表示
+            var txt = document.createTextNode("プレイヤー" + (i + 1) + "のカードレベル");
+            card_input.appendChild(txt);
+            card_input.appendChild(document.createElement('br'));
+
+
+        }
     }
-
-
-
 </script>
 <style>
     body {
@@ -68,40 +59,3 @@
 </style>
 
 </html>
-<!--  1つのコンテンツのコード  -->
-<!--
-<div id=** class="content">
-                <div id=left>
-                    **
-                </div>
-                <div id=right>
-                    **
-                </div>
-            </div>
--->
-
-<!--  サンプルコードの枠のコード  -->
-<!--
-    <table border="1" class="code">
-        <tr>
-            <th>&lt;&gt;</th>
-        </tr>
-    </table>
--->
-
-<!-- tabのコード -->
-<!--
-    &nbsp;&nbsp;&nbsp;&nbsp;
--->
-
-<!--  table-of-contentsのコード  -->
-<!--
-    <a href="#**">**</a><br>
--->
-
-<!-- ▶︎のサンプルコード -->
-<!--
-    <details>
-        <summary>&nbsp;</summary>
-    </details>
--->
