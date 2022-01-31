@@ -12,12 +12,24 @@
         <div id="account_num_form">
             <input type="num" id="account_num_input" placeholder="アカウント数を入力してください.">
         </div>
-        <div id=card_input></div>
+        <div id="card_sentence"></div>
+        <div id=card_input>
+            <input id="card_level_input" type="range" min=1 max=14>
+            <input id="card_num_input" type="number" placeholder="カードのレベルを入力してください.">
+        </div>
     </div>
 </body>
 <script>
     //アカウント数
     var account_num;
+    //各カードレベル
+    var card_level = [];
+    //各カード枚数
+    var card_num = [];
+    //現在のカード
+    var crashroyal_card_current = 0;
+    //現在のアカウント
+    var account_num_current = 0;
     //アカウント入力のinput欄,enterでget_account_num_input
     var get_account_num_input = document.getElementById("account_num_input");
     get_account_num_input.addEventListener("keypress", get_account_num);
@@ -25,6 +37,22 @@
     var get_account_num_form = document.getElementById("account_num_form");
     //カードのレベルのinput
     var card_input = document.getElementById("card_input");
+    card_input.style.display = "none";
+    //カードのレベル,枚数のinput
+    var card_sentence = document.getElementById("card_sentence");
+    var get_card_level = document.getElementById("card_level_input");
+    var get_card_num_input = document.getElementById("card_num_input");
+    get_card_num_input.addEventListener("keypress", get_card_num);
+    //クラロワカード情報----------------------------------------------
+    //カードの名前
+    var cards_name = ['Skeletons', 'Ice Spirit', 'Fire Spirit', 'Electro Spirit', 'Gpblins', 'Bomber', 'Spear Goblins', 'Bats', 'Zap', 'Giant Snowball', 'Knight', 'Archers', 'Minions', 'Goblin Gang', 'Skeleton Barrel', 'Firecracker', 'Cannon', 'Arrows', 'Royal Dellvery', 'Skeleton Dragons', 'Mortar', 'Tesla', 'Barbarians', 'Minion Horde', 'Rascals', 'Royal Giant', 'Elite Barbarians', 'Royal Recruits', 'Heal Spirit', 'Ice Golem', 'Mega Minion', 'Dart Goblin', 'Elixir Golem', 'Tombstone', 'Earthquake', 'Valkyrie', 'Musketeer', 'Mini P.E.K.K.A', 'Hogrider', 'Battle Ram', 'Zappies', 'Flying Machine', 'Battle Healer', 'Bomb Tower', 'Furnace', 'Goboin Cage', 'Fireball', 'Giant', 'Wizard', 'Royal Hogs', 'Goblin Hut', 'Inferno Tower', 'Elixir Collector', 'Rocket', 'Barbarian Hut', 'Three Muscketeers', 'Mirror', 'Wall Braekers', 'Rage', 'Barbaarian Barrel', 'Skeleton Army', 'Guards', 'Goblin Barrel', 'Tornado', 'Clone', 'Baby Dragon', 'Dark Prince', 'Hunter', 'Goblin Drill', 'Freeze', 'Poison', 'Balloon', 'Witch', 'Exeutioner', 'Prince', 'Bowler', 'Cannon Cart', 'Electro Dragon', 'Giant Skeleton', 'Goblin Giant', 'X-Bow', 'Lightning', 'P.E.K.K.A', 'Golem', 'Electro Giant', 'Thelog', 'Ice Wizard', 'Princess', 'Miner', 'Bandit', 'Royal Ghost', 'Fisherman', 'Lumberjack', 'Infernd Dragon', 'Electro Wizard', 'Night Witch', 'Magic Archer', 'Mother Wigtch', 'Ram Rider', 'Graveyard', 'Sparky', 'Lava Hound', 'Mega Knight', 'Skeleton King', 'Golden Knight', 'Archer Queen'];
+    //COMMON,RARE,EPIC,LEGENDARY,CHAMPION,TOTAL
+    var cards_num = [28, 28, 29, 18, 3, 106];
+    //カードのMinLevel
+    var cards_min_level = [1, 3, 6, 9, 11];
+    //カードのMaxLevel
+    var cards_max_level = [13, 13, 13, 13, 13];
+    //----------------------------------------------------------------
     //アカウント数取得
     function get_account_num(e) {
         if (e.keyCode === 13) {
@@ -33,19 +61,35 @@
             //input欄の削除
             get_account_num_form.removeChild(get_account_num_input);
             //カードレベルのinput欄作成
-            make_card_input();
+            card_input.style.display = "block";
+            change_card_input();
         }
     }
-    function make_card_input() {
-        for (var i = 0; i < account_num; i++) {
-            //アカウントNo.を表示
-            var txt = document.createTextNode("プレイヤー" + (i + 1) + "のカードレベル");
-            card_input.appendChild(txt);
-            card_input.appendChild(document.createElement('br'));
+    //カード入力欄の変更
+    function change_card_input() {
 
+        var txt = document.createTextNode("プレイヤー" + (account_num_current + 1) + "のカードレベル");
+        card_sentence.appendChild(txt);
+        card_sentence.appendChild(document.createElement('br'));
+        txt = document.createTextNode("プレイヤー" + (account_num_current + 1) + " : " + cards_name[crashroyal_card_current] + 'のレベルは');
+        card_sentence.appendChild(txt);
+        crashroyal_card_current++;
+        if (crashroyal_card_current === cards_num[5]) {
+            crashroyal_card_current = 0;
+            account_num_current++;
+        }
+    }
+    //カード入力欄から取得
+    function get_card_num(e) {
+        if (e.keyCode === 13) {
+            //カードレベル,枚数取得
+            console.log("getcardnum");
+            card_level.push(get_card_level.value);
+            card_num.push(get_card_num_input.value);
 
         }
     }
+
 </script>
 <style>
     body {
