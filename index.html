@@ -43,7 +43,7 @@
 
                 </ul>
             </form>
-            <p>必要コイン : <span class="coin_display"></span></p>
+            <p id="p_coin_display">必要コイン : <span class="coin_display"></span></p>
         </div>
 
     </div>
@@ -83,6 +83,9 @@
     get_card_num_input.addEventListener("keypress", get_card_num);
     //リストのDOS
     var list = document.getElementById(list);
+    //必要コインのDOS
+    var p_coin_display = document.getElementById(p_coin_display);
+    p_coin_display.style.display = "none";
     //クラロワカード情報----------------------------------------------
     //カードの名前
     var cards_name = ['Skeletons', 'Ice Spirit', 'Fire Spirit', 'Electro Spirit', 'Gpblins', 'Bomber', 'Spear Goblins', 'Bats', 'Zap', 'Giant Snowball', 'Knight', 'Archers', 'Minions', 'Goblin Gang', 'Skeleton Barrel', 'Firecracker', 'Cannon', 'Arrows', 'Royal Dellvery', 'Skeleton Dragons', 'Mortar', 'Tesla', 'Barbarians', 'Minion Horde', 'Rascals', 'Royal Giant', 'Elite Barbarians', 'Royal Recruits', 'Heal Spirit', 'Ice Golem', 'Mega Minion', 'Dart Goblin', 'Elixir Golem', 'Tombstone', 'Earthquake', 'Valkyrie', 'Musketeer', 'Mini P.E.K.K.A', 'Hogrider', 'Battle Ram', 'Zappies', 'Flying Machine', 'Battle Healer', 'Bomb Tower', 'Furnace', 'Goboin Cage', 'Fireball', 'Giant', 'Wizard', 'Royal Hogs', 'Goblin Hut', 'Inferno Tower', 'Elixir Collector', 'Rocket', 'Barbarian Hut', 'Three Muscketeers', 'Mirror', 'Wall Braekers', 'Rage', 'Barbaarian Barrel', 'Skeleton Army', 'Guards', 'Goblin Barrel', 'Tornado', 'Clone', 'Baby Dragon', 'Dark Prince', 'Hunter', 'Goblin Drill', 'Freeze', 'Poison', 'Balloon', 'Witch', 'Exeutioner', 'Prince', 'Bowler', 'Cannon Cart', 'Electro Dragon', 'Giant Skeleton', 'Goblin Giant', 'X-Bow', 'Lightning', 'P.E.K.K.A', 'Golem', 'Electro Giant', 'Thelog', 'Ice Wizard', 'Princess', 'Miner', 'Bandit', 'Royal Ghost', 'Fisherman', 'Lumberjack', 'Infernd Dragon', 'Electro Wizard', 'Night Witch', 'Magic Archer', 'Mother Wigtch', 'Ram Rider', 'Graveyard', 'Sparky', 'Lava Hound', 'Mega Knight', 'Skeleton King', 'Golden Knight', 'Archer Queen'];
@@ -123,6 +126,7 @@
             //カードレベルのinput欄作成
             card_input.style.display = "block";
             set_card_level.style.display = "block";
+            p_coin_display.style.display = "block";
             change_card_input();
         }
     }
@@ -228,7 +232,7 @@
         }
     }
     function set_calc() {
-        /*<li><input type="checkbox"><span data-price="1">一円</span></li>*/
+        /*<li><input type="checkbox"><span data_coin="1">一円</span></li>*/
         for (var i = 0; i < cards_num[5]; i++) {
             var txt = document.createTextNode(cards_name[i] + "の必要枚数は" + calc_num(i));
             var span = document.createElement("span");
