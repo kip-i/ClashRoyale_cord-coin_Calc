@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>クラロワカードコイン計算機</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -12,31 +13,48 @@
         <div id="account_num_form">
             <input type="num" id="account_num_input" placeholder="アカウント数を入力してください.">
         </div>
-        <div id="card_sentence"></div>
-        <div id="level_current">8</div>
-        <div id=card_input>
-            <input id="card_level_input" type="range" min=1 max=14 list="level_list">
-            <datalist id="level_list">
-                <option value="1">
-                <option value="2">
-                <option value="3">
-                <option value="4">
-                <option value="5">
-                <option value="6">
-                <option value="7">
-                <option value="8">
-                <option value="9">
-                <option value="10">
-                <option value="11">
-                <option value="12">
-                <option value="13">
-                <option value="14">
-            </datalist>
-            <input id="card_num_input" type="number" placeholder="カードの枚数を入力してください.">
+        <div id="all_input">
+            <div id="card_sentence"></div>
+            <div id="level_current">8</div>
+            <div id=card_input>
+                <input id="card_level_input" type="range" min=1 max=14 list="level_list">
+                <datalist id="level_list">
+                    <option value="1">
+                    <option value="2">
+                    <option value="3">
+                    <option value="4">
+                    <option value="5">
+                    <option value="6">
+                    <option value="7">
+                    <option value="8">
+                    <option value="9">
+                    <option value="10">
+                    <option value="11">
+                    <option value="12">
+                    <option value="13">
+                    <option value="14">
+                </datalist>
+                <input id="card_num_input" type="number" placeholder="カードの枚数を入力してください.">
+            </div>
         </div>
+        <div class="coin_sum">
+            <form>
+                <ul id="list">
+
+                </ul>
+            </form>
+            <p>必要コイン : <span class="coin_display"></span></p>
+        </div>
+
     </div>
 </body>
 <script>
+    const COMMON = 0;
+    const RARE = 1;
+    const EPIC = 2;
+    const LEGENDARY = 3;
+    const CHAMPION = 4;
+    const TOTAL = 5;
     //アカウント数
     var account_num;
     //各カードレベル
@@ -63,6 +81,8 @@
     var get_card_level = document.getElementById("card_level_input");
     var get_card_num_input = document.getElementById("card_num_input");
     get_card_num_input.addEventListener("keypress", get_card_num);
+    //リストのDOS
+    var list = document.getElementById(list);
     //クラロワカード情報----------------------------------------------
     //カードの名前
     var cards_name = ['Skeletons', 'Ice Spirit', 'Fire Spirit', 'Electro Spirit', 'Gpblins', 'Bomber', 'Spear Goblins', 'Bats', 'Zap', 'Giant Snowball', 'Knight', 'Archers', 'Minions', 'Goblin Gang', 'Skeleton Barrel', 'Firecracker', 'Cannon', 'Arrows', 'Royal Dellvery', 'Skeleton Dragons', 'Mortar', 'Tesla', 'Barbarians', 'Minion Horde', 'Rascals', 'Royal Giant', 'Elite Barbarians', 'Royal Recruits', 'Heal Spirit', 'Ice Golem', 'Mega Minion', 'Dart Goblin', 'Elixir Golem', 'Tombstone', 'Earthquake', 'Valkyrie', 'Musketeer', 'Mini P.E.K.K.A', 'Hogrider', 'Battle Ram', 'Zappies', 'Flying Machine', 'Battle Healer', 'Bomb Tower', 'Furnace', 'Goboin Cage', 'Fireball', 'Giant', 'Wizard', 'Royal Hogs', 'Goblin Hut', 'Inferno Tower', 'Elixir Collector', 'Rocket', 'Barbarian Hut', 'Three Muscketeers', 'Mirror', 'Wall Braekers', 'Rage', 'Barbaarian Barrel', 'Skeleton Army', 'Guards', 'Goblin Barrel', 'Tornado', 'Clone', 'Baby Dragon', 'Dark Prince', 'Hunter', 'Goblin Drill', 'Freeze', 'Poison', 'Balloon', 'Witch', 'Exeutioner', 'Prince', 'Bowler', 'Cannon Cart', 'Electro Dragon', 'Giant Skeleton', 'Goblin Giant', 'X-Bow', 'Lightning', 'P.E.K.K.A', 'Golem', 'Electro Giant', 'Thelog', 'Ice Wizard', 'Princess', 'Miner', 'Bandit', 'Royal Ghost', 'Fisherman', 'Lumberjack', 'Infernd Dragon', 'Electro Wizard', 'Night Witch', 'Magic Archer', 'Mother Wigtch', 'Ram Rider', 'Graveyard', 'Sparky', 'Lava Hound', 'Mega Knight', 'Skeleton King', 'Golden Knight', 'Archer Queen'];
@@ -72,6 +92,26 @@
     var cards_min_level = [1, 3, 6, 9, 11];
     //カードのMaxLevel
     var cards_max_level = [14, 14, 14, 14, 14];
+    //commonの必要枚数,
+    var common_num = [2, 4, 10, 20, 50, 100, 200, 400, 800, 1000, 1500, 3000, 5000];
+    //rareの必要枚数
+    var rare_num = [2, 4, 10, 20, 50, 100, 200, 400, 500, 750, 1250];
+    //epicの必要枚数
+    var epic_num = [2, 4, 10, 20, 40, 50, 100, 200];
+    //legendaryの必要枚数
+    var legendary_num = [2, 4, 6, 10, 20];
+    //championの必要枚数
+    var champion_num = [2, 8, 20];
+    //commonの必要コイン
+    var common_coin = [5, 20, 50, 150, 400, 1000, 2000, 4000, 8000, 15000, 35000, 75000, 100000];
+    //rareの必要コイン
+    var rare_coin = [50, 150, 400, 1000, 2000, 4000, 8000, 15000, 35000, 75000, 100000];
+    //epicの必要コイン
+    var epic_coin = [400, 2000, 8000, 15000, 35000, 75000, 100000];
+    //legendaryの必要コイン
+    var legendary_coin = [5000, 15000, 35000, 75000, 100000];
+    //championの必要コイン
+    var champion_coin = [35000, 75000, 100000];
     //----------------------------------------------------------------
     //アカウント数取得
     function get_account_num(e) {
@@ -94,11 +134,112 @@
         card_sentence.appendChild(document.createElement('br'));
         txt = document.createTextNode("プレイヤー" + (account_num_current + 1) + " : " + cards_name[crashroyal_card_current] + 'のレベルは');
         card_sentence.appendChild(txt);
-
+        //次の名前にセット
         crashroyal_card_current++;
         if (crashroyal_card_current === cards_num[5]) {
             crashroyal_card_current = 0;
             account_num_current++;
+            console.log(account_num_current + "=" + account_num);
+            if (account_num_current == account_num) {
+                //全ての入力が終わったら
+                //見えなくさせる
+                console.log(account_num_current + "=" + account_num);
+                display_none();
+                //計算機を出す.
+                set_calc();
+            }
+        }
+    }
+
+    //全ての入力が終わった時
+    //見えなくさせる
+    function display_none() {
+        var input = document.getElementById("all_input");
+        input.style.display = "none";
+    }
+    //レア度の判定
+    function rarity_judg(num) {
+        var i = 0;
+        var threshold = 0;
+        while (num > threshold) {
+            threshold += cards_num[i];
+            i++;
+        }
+        return i - 1;
+    }
+    //各カードの必要なコイン計算
+    function calc_coin(num) {
+        var sum = 0;
+        var rarity;
+        rarity = rarity_judg(num);
+        for (var i = card_level[num] - 1; i < 13; i++) {
+            switch (rarity) {
+                case 0:
+                    sum += common_coin[i];
+                    break;
+                case 1:
+                    sum += rera_coin[i - cards_min_level[RARE]];
+                    break;
+                case 2:
+                    sum += epic_coin[i - cards_min_level[EPIC]];
+                    break;
+                case 3:
+                    sum += legendary_coin[i - cards_min_level[LEGENDARY]];
+                    break;
+                case 4:
+                    sum += champion_coin[i - cards_min_level[CHAMPION]];
+                    break;
+            }
+        }
+        return sum;
+    }
+    //各カードの必要な枚数計算
+    function calc_num(num) {
+        var sum = 0;
+        var rarity;
+        rarity = rarity_judg(num);
+        for (var i = card_level[num] - 1; i < 13; i++) {
+            switch (rarity) {
+                case 0:
+                    sum += common_num[i];
+                    break;
+                case 1:
+                    sum += rera_num[i - cards_min_level[RARE]];
+                    break;
+                case 2:
+                    sum += epic_num[i - cards_min_level[EPIC]];
+                    break;
+                case 3:
+                    sum += legendary_num[i - cards_min_level[LEGENDARY]];
+                    break;
+                case 4:
+                    sum += champion_num[i - cards_min_level[CHAMPION]];
+                    break;
+            }
+        }
+        var sub_sum = 0;
+        for (var i = 1; i < account_num; i++) {
+            sub_sum += card_num[i * cards_num[TOTAL] + num];
+        }
+        if (sum - sub_sum < 0) {
+            return 0;
+        } else {
+            return sum - sub_sum;
+        }
+    }
+    function set_calc() {
+        /*<li><input type="checkbox"><span data-price="1">一円</span></li>*/
+        for (var i = 0; i < cards_num[5]; i++) {
+            var txt = document.createTextNode(cards_name[i] + "の必要枚数は" + calc_num(i));
+            var span = document.createElement("span");
+            span.setAttribute("data_coin", calc_coin(i));
+            span.appendChild(txt);
+            var input = document.createElement("input");
+            input.setAttribute("type", "checkbox");
+            var li = document.createTextNode("li");
+            li.appendChild(input);
+            li.appendChild(span);
+            list.appendChild(li);
         }
     }
     //カード入力欄から取得
@@ -107,7 +248,8 @@
             //カードレベル,枚数取得
             card_level.push(get_card_level.value);
             card_num.push(get_card_num_input.value);
-            get_card_num_input.value = "";
+            //--------------------------------------------------------------------------------------------
+            //get_card_num_input.value = "";
             change_card_input();
         }
     }
@@ -115,7 +257,20 @@
     get_card_level.addEventListener("change", function (e) {
         set_card_level.innerHTML = get_card_level.value;
     });
-
+    $(function () {
+        $("input").on("change", function () {
+            calc_sum_coin();
+        });
+        function calc_sum_coin() {
+            var total_coin = 0;
+            $(".coin_sum li").each(function () {
+                if ($(this).find("input").prop("checked")) {
+                    total_coin += Number($(this).find("span").data("coin"));
+                }
+                $(".coin_display").text(total_coin);
+            });
+        }
+    });
 </script>
 <style>
     body {
