@@ -84,7 +84,7 @@
     //リストのDOS
     var list = document.getElementById(list);
     //必要コインのDOS
-    var p_coin_display = document.getElementById(p_coin_display);
+    var p_coin_display = document.getElementById("p_coin_display");
     p_coin_display.style.display = "none";
     //クラロワカード情報----------------------------------------------
     //カードの名前
@@ -126,7 +126,7 @@
             //カードレベルのinput欄作成
             card_input.style.display = "block";
             set_card_level.style.display = "block";
-            p_coin_display.style.display = "block";
+
             change_card_input();
         }
     }
@@ -147,10 +147,10 @@
             if (account_num_current == account_num) {
                 //全ての入力が終わったら
                 //見えなくさせる
-                console.log(account_num_current + "=" + account_num);
                 display_none();
                 //計算機を出す.
                 set_calc();
+                p_coin_display.style.display = "block";
             }
         }
     }
