@@ -34,7 +34,27 @@
                     <option value="13">
                     <option value="14">
                 </datalist>
-                <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください.">
+                <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください."><br>
+                <table id="range_num">
+                    <tr>
+                        <td>1 </td>
+                        <td>2 </td>
+                        <td>3 </td>
+                        <td>4 </td>
+                        <td>5 </td>
+                        <td>6 </td>
+                        <td>7 </td>
+                        <td>8 </td>
+                        <td>9 </td>
+                        <td>10 </td>
+                        <td>11 </td>
+                        <td>12 </td>
+                        <td>13 </td>
+                        <td>14 </td>
+
+                    </tr>
+                </table>
+
             </div>
         </div>
         <div class="coin_sum">
@@ -131,10 +151,8 @@
     //カード入力欄の変更
     function change_card_input() {
         card_sentence.innerHTML = "";
-        var txt = document.createTextNode("プレイヤー" + (account_num_current + 1) + "のカードレベル");
-        card_sentence.appendChild(txt);
         card_sentence.appendChild(document.createElement('br'));
-        txt = document.createTextNode("プレイヤー" + (account_num_current + 1) + " : " + cards_name[crashroyal_card_current] + 'のレベルは');
+        var txt = document.createTextNode("プレイヤー" + (account_num_current + 1) + " : " + cards_name[crashroyal_card_current] + 'のレベルは');
         card_sentence.appendChild(txt);
         //次の名前にセット
         crashroyal_card_current++;
@@ -280,7 +298,7 @@
         }
     }
     //rangeが変更されたとき
-    get_card_level.addEventListener("change", function (e) {
+    get_card_level.addEventListener("input", function (e) {
         set_card_level.innerHTML = get_card_level.value;
     });
     $(function () {
@@ -306,6 +324,23 @@
 
     .sixteenthEm {
         width: 16em;
+    }
+
+    #card_level_input {
+        width: 18em;
+
+    }
+
+    td {
+        text-align: center;
+    }
+
+    #range_num {
+        font-size: 0.6em;
+        border: 1px;
+        table-layout: fixed;
+        width: 17%;
+
     }
 </style>
 
