@@ -11,7 +11,7 @@
     <div class="container">
         <h2>クラロワカードコイン計算機</h2>
         <div id="account_num_form">
-            <input type="num" id="account_num_input" placeholder="アカウント数を入力してください.">
+            <input type="num" id="account_num_input" class="sixteenthEm" placeholder="アカウント数を入力してください.">
         </div>
         <div id="all_input">
             <div id="card_sentence"></div>
@@ -34,7 +34,7 @@
                     <option value="13">
                     <option value="14">
                 </datalist>
-                <input id="card_num_input" type="number" placeholder="カードの枚数を入力してください.">
+                <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください.">
             </div>
         </div>
         <div class="coin_sum">
@@ -234,6 +234,7 @@
         } else {
             return sum - sub_sum;
         }*/
+        sum = sum - card_num[num];
         return sum;
     }
     function set_calc() {
@@ -303,7 +304,7 @@
         color: rgb(64, 251, 43);
     }
 
-    input {
+    .sixteenthEm {
         width: 16em;
     }
 </style>
