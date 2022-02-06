@@ -38,10 +38,8 @@
             </div>
         </div>
         <div class="coin_sum">
-            <form>
-                <ul id="list">
+            <form id="list">
 
-                </ul>
             </form>
             <p id="p_coin_display">必要コイン : <span class="coin_display"></span></p>
         </div>
@@ -82,7 +80,7 @@
     var get_card_num_input = document.getElementById("card_num_input");
     get_card_num_input.addEventListener("keypress", get_card_num);
     //リストのDOS
-    var list = document.getElementById(list);
+    var list = document.getElementById("list");
     //必要コインのDOS
     var p_coin_display = document.getElementById("p_coin_display");
     p_coin_display.style.display = "none";
@@ -165,7 +163,7 @@
     function rarity_judg(num) {
         var i = 0;
         var threshold = 0;
-        while (num > threshold) {
+        while (num >= threshold) {
             threshold += cards_num[i];
             i++;
         }
@@ -176,13 +174,15 @@
         var sum = 0;
         var rarity;
         rarity = rarity_judg(num);
-        for (var i = card_level[num] - 1; i < 13; i++) {
+        console.log("calccoin,rarity:" + rarity);
+        console.log("cardName: " + cards_name[num]);
+        for (var i = card_level[num]; i < 14; i++) {
             switch (rarity) {
                 case 0:
-                    sum += common_coin[i];
+                    sum += common_coin[i - cards_min_level[COMMON]];
                     break;
                 case 1:
-                    sum += rera_coin[i - cards_min_level[RARE]];
+                    sum += rare_coin[i - cards_min_level[RARE]];
                     break;
                 case 2:
                     sum += epic_coin[i - cards_min_level[EPIC]];
@@ -194,6 +194,7 @@
                     sum += champion_coin[i - cards_min_level[CHAMPION]];
                     break;
             }
+            console.log("nowlevel : " + i + ", sum:" + sum);
         }
         return sum;
     }
@@ -202,13 +203,15 @@
         var sum = 0;
         var rarity;
         rarity = rarity_judg(num);
-        for (var i = card_level[num] - 1; i < 13; i++) {
+        console.log("calcnum,rarity:" + rarity);
+        console.log("cardName: " + cards_name[num]);
+        for (var i = card_level[num]; i < 14; i++) {
             switch (rarity) {
                 case 0:
-                    sum += common_num[i];
+                    sum += common_num[i - cards_min_level[COMMON]];
                     break;
                 case 1:
-                    sum += rera_num[i - cards_min_level[RARE]];
+                    sum += rare_num[i - cards_min_level[RARE]];
                     break;
                 case 2:
                     sum += epic_num[i - cards_min_level[EPIC]];
@@ -220,8 +223,9 @@
                     sum += champion_num[i - cards_min_level[CHAMPION]];
                     break;
             }
+            console.log("nowlevel : " + i + ", sum:" + sum);
         }
-        var sub_sum = 0;
+        /*var sub_sum = 0;
         for (var i = 1; i < account_num; i++) {
             sub_sum += card_num[i * cards_num[TOTAL] + num];
         }
@@ -229,22 +233,39 @@
             return 0;
         } else {
             return sum - sub_sum;
-        }
+        }*/
+        return sum;
     }
     function set_calc() {
-        /*<li><input type="checkbox"><span data_coin="1">一円</span></li>*/
-        for (var i = 0; i < cards_num[5]; i++) {
-            var txt = document.createTextNode(cards_name[i] + "の必要枚数は" + calc_num(i));
-            var span = document.createElement("span");
-            span.setAttribute("data_coin", calc_coin(i));
-            span.appendChild(txt);
+        console.log("card_level");
+        console.log(card_level);
+        console.log("card_num:");
+        console.log(card_num);
+        for (var i = 0; i < cards_num[TOTAL]; i++) {
             var input = document.createElement("input");
             input.setAttribute("type", "checkbox");
-            var li = document.createTextNode("li");
-            li.appendChild(input);
-            li.appendChild(span);
-            list.appendChild(li);
+            input.setAttribute("name", "check_card");
+            var coin = calc_coin(i);
+            input.setAttribute("value", coin);
+            var num = calc_num(i);
+            var txt = document.createTextNode(cards_name[i] + "の必要枚数は" + num);
+            list.appendChild(input);
+            list.appendChild(txt);
+            list.appendChild(document.createElement('br'));
         }
+        $(function () {
+            $('[name="check_card"]').change(function () {
+                var total_coin = 0;
+                $('[name="check_card"]:checked').each(function (index, element) {
+                    total_coin += Number($(element).val());
+
+                });
+                $('.coin_display').text(total_coin);
+
+            });
+        });
+
+
     }
     //カード入力欄から取得
     function get_card_num(e) {
