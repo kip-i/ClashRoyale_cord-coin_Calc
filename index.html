@@ -34,33 +34,36 @@
                     <option value="13">
                     <option value="14">
                 </datalist>
-                <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください."><br>
-                <table id="range_num">
-                    <tr>
-                        <td>1 </td>
-                        <td>2 </td>
-                        <td>3 </td>
-                        <td>4 </td>
-                        <td>5 </td>
-                        <td>6 </td>
-                        <td>7 </td>
-                        <td>8 </td>
-                        <td>9 </td>
-                        <td>10 </td>
-                        <td>11 </td>
-                        <td>12 </td>
-                        <td>13 </td>
-                        <td>14 </td>
 
-                    </tr>
-                </table>
+                <div id="range_num_div">
+                    <table id="range_num">
+                        <tr>
+                            <td>1 </td>
+                            <td>2 </td>
+                            <td>3 </td>
+                            <td>4 </td>
+                            <td>5 </td>
+                            <td>6 </td>
+                            <td>7 </td>
+                            <td>8 </td>
+                            <td>9 </td>
+                            <td>10 </td>
+                            <td>11 </td>
+                            <td>12 </td>
+                            <td>13 </td>
+                            <td>14 </td>
+
+                        </tr>
+                    </table>
+                </div>
+                <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください."><br>
 
             </div>
         </div>
         <div class="coin_sum">
-            <form id="list">
+            <table id="list">
 
-            </form>
+            </table>
             <div id="coin_content">
                 <div id="coin_content_sticky">
                     <p id="p_coin_display">必要コイン : <span class="coin_display"></span></p>
@@ -162,7 +165,7 @@
         card_sentence.appendChild(txt);
         //次の名前にセット
         crashroyal_card_current++;
-        if (crashroyal_card_current === cards_num[5]) {
+        if (crashroyal_card_current > cards_num[TOTAL]) {
             crashroyal_card_current = 0;
             account_num_current++;
             console.log(account_num_current + "=" + account_num);
@@ -174,6 +177,7 @@
                 set_calc();
                 p_coin_display.style.display = "block";
             }
+
         }
     }
 
@@ -266,8 +270,22 @@
         console.log(card_level);
         console.log("card_num:");
         console.log(card_num);
+        var tr1 = document.createElement("tr");
+        var th1 = document.createElement("th");
+        var th2 = document.createElement("th");
+        th2.textContent = "CardName"
+        var th3 = document.createElement("th");
+        th3.textContent = "必要枚数"
+        var th4 = document.createElement("th");
+        th4.textContent = "-サブ垢"
+        tr1.appendChild(th1);
+        tr1.appendChild(th2);
+        tr1.appendChild(th3);
+        tr1.appendChild(th4);
+        list.appendChild(tr1);
         for (var i = 0; i < cards_num[TOTAL]; i++) {
-            var input = document.createElement("input");
+            console.log("i=" + i);
+            /*var input = document.createElement("input");
             input.setAttribute("type", "checkbox");
             input.setAttribute("name", "check_card");
             var coin = calc_coin(i);
@@ -276,7 +294,38 @@
             var txt = document.createTextNode(cards_name[i] + "の必要枚数は" + num);
             list.appendChild(input);
             list.appendChild(txt);
-            list.appendChild(document.createElement('br'));
+            list.appendChild(document.createElement('br'));*/
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            input = document.createElement("input");
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("name", "check_card");
+            var coin = calc_coin(i);
+            input.setAttribute("value", coin);
+            td1.appendChild(input);
+            var td2 = document.createElement("td");
+            td2.appendChild(document.createTextNode(cards_name[i]));
+            var td3 = document.createElement("td");
+            var num = calc_num(i);
+            td3.textContent = num;
+            var td4 = document.createElement("td");
+            var sub_sum = 0;
+            for (var j = 1; j < account_num; j++) {
+                sub_sum += card_num[j * cards_num[TOTAL] + i];
+            }
+            if (num - sub_sum < 0) {
+                num = 0;
+            } else {
+                num = num - sub_sum;
+            }
+            console.log("card_num[j * cards_num[TOTAL] + i]=" + card_num[j * cards_num[TOTAL] + i] + ", sub_sum=" + sub_sum);
+            td4.textContent = num;
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            list.appendChild(tr);
+
         }
         $(function () {
             $('[name="check_card"]').change(function () {
@@ -341,11 +390,16 @@
         text-align: center;
     }
 
+    #range_num_div {
+        width: 15.3em;
+
+    }
+
     #range_num {
         font-size: 0.6em;
         border: 1px;
         table-layout: fixed;
-        width: 17%;
+        width: 100%;
 
     }
 
