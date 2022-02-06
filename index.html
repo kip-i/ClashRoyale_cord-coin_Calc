@@ -61,8 +61,14 @@
             <form id="list">
 
             </form>
-            <p id="p_coin_display">必要コイン : <span class="coin_display"></span></p>
+            <div id="coin_content">
+                <div id="coin_content_sticky">
+                    <p id="p_coin_display">必要コイン : <span class="coin_display"></span></p>
+                </div>
+            </div>
+
         </div>
+        <div id="space"></div>
 
     </div>
 </body>
@@ -341,6 +347,20 @@
         table-layout: fixed;
         width: 17%;
 
+    }
+
+    #coin_content_sticky {
+        position: sticky;
+        position: fixed;
+        bottom: 20px;
+        width: 30em;
+        background: rgb(255, 255, 255);
+        color: rgb(64, 251, 43);
+        padding-left: 1em;
+    }
+
+    #space {
+        height: 5em;
     }
 </style>
 
