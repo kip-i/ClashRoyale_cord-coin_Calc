@@ -322,6 +322,11 @@
             tr.appendChild(td2);
             tr.appendChild(td3);
             tr.appendChild(td4);
+            if (i % 2 === 0) {
+                tr.setAttribute("class", "red");
+            } else {
+                tr.setAttribute("class", "blue");
+            }
             list.appendChild(tr);
 
         }
@@ -386,17 +391,10 @@
 </script>
 <style>
     body {
-        background: rgb(83, 98, 110);
+        background: #161708;
         color: #fff6fc;
     }
 
-    /*input[type="range"] {
-        -webkit-appearance: none;
-        background: #fc5180;
-        color: #2c76d2;
-        border-radius: 20px;
-
-    }*/
 
     #rangeBack,
     #rangeActive {
@@ -426,8 +424,7 @@
     }
 
     #range_num_div {
-        width: 15.3em;
-
+        width: 15em;
     }
 
     #range_num {
@@ -435,17 +432,17 @@
         border: 1px;
         table-layout: fixed;
         width: 100%;
-
     }
 
     #coin_content_sticky {
         position: sticky;
         position: fixed;
         bottom: 20px;
-        width: 30em;
-        background: rgb(255, 255, 255);
-        color: rgb(64, 251, 43);
+        width: 15em;
+        background: #161708;
+        color: #ecd616;
         padding-left: 1em;
+        border: 5px ridge #fff6fc;
     }
 
     #space {
@@ -453,7 +450,7 @@
     }
 
     .blue {
-        color: #2c76d2;
+        color: #5392e0;
     }
 
     .red {
