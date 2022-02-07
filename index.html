@@ -9,32 +9,14 @@
 
 <body>
     <div class="container">
-        <h2>クラロワカードコイン計算機</h2>
+        <h2><span class="blue">Clash Royale </span><span class="red">カードコイン計算機</span></h2>
         <div id="account_num_form">
             <input type="num" id="account_num_input" class="sixteenthEm" placeholder="アカウント数を入力してください.">
         </div>
         <div id="all_input">
             <div id="card_sentence"></div>
-            <div id="level_current">8</div>
+            <div id="level_current">11</div>
             <div id=card_input>
-                <input id="card_level_input" type="range" min=1 max=14 list="level_list">
-                <datalist id="level_list">
-                    <option value="1">
-                    <option value="2">
-                    <option value="3">
-                    <option value="4">
-                    <option value="5">
-                    <option value="6">
-                    <option value="7">
-                    <option value="8">
-                    <option value="9">
-                    <option value="10">
-                    <option value="11">
-                    <option value="12">
-                    <option value="13">
-                    <option value="14">
-                </datalist>
-
                 <div id="range_num_div">
                     <table id="range_num">
                         <tr>
@@ -52,10 +34,31 @@
                             <td>12 </td>
                             <td>13 </td>
                             <td>14 </td>
-
                         </tr>
                     </table>
                 </div>
+                <input id="card_level_input" type="range" min=1 max=14 value=11 list="level_list">
+                <div id="rangeBack"></div>
+                <div id="rangeActive"></div>
+                <datalist id="level_list">
+                    <option value="1">
+                    <option value="2">
+                    <option value="3">
+                    <option value="4">
+                    <option value="5">
+                    <option value="6">
+                    <option value="7">
+                    <option value="8">
+                    <option value="9">
+                    <option value="10">
+                    <option value="11">
+                    <option value="12">
+                    <option value="13">
+                    <option value="14">
+                </datalist>
+
+                <br>
+
                 <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください."><br>
 
             </div>
@@ -103,6 +106,8 @@
     //カードのレベルのinput
     var card_input = document.getElementById("card_input");
     card_input.style.display = "none";
+    var rangeActive = document.getElementById("rangeActive");
+    var rangeBack = document.getElementById("rangeBack");
     //カードのレベル,枚数のinput
     var card_sentence = document.getElementById("card_sentence");
     var get_card_level = document.getElementById("card_level_input");
@@ -154,9 +159,34 @@
             card_input.style.display = "block";
             set_card_level.style.display = "block";
 
-            change_card_input();
+
+            $(function () {
+                // 要素の位置座標を取得
+                var clientRect = get_card_level.getBoundingClientRect();
+                // 画面の左端から、要素の左端までの距離
+                var x = clientRect.left;
+                // 画面の上端から、要素の上端までの距離
+                var y = clientRect.top;
+                console.log("input x: " + x + ", y: " + y);
+                change_locate(x, y);
+                change_card_input();
+                //rangeの位置から色のバーの位置変更
+                function change_locate(x, y) {
+                    rangeActive.style.position = "absolute";
+                    rangeActive.style.top = y + 55 + "px";
+                    rangeActive.style.left = x + "px";
+                    rangeBack.style.position = "absolute";
+                    rangeBack.style.top = y + 55 + "px";
+                    rangeBack.style.left = x + 186 + "px";
+                    console.log("changeLocate x:" + x + ", y: " + y);
+                }
+
+
+            });
         }
     }
+
+
     //カード入力欄の変更
     function change_card_input() {
         card_sentence.innerHTML = "";
@@ -168,7 +198,6 @@
         if (crashroyal_card_current > cards_num[TOTAL]) {
             crashroyal_card_current = 0;
             account_num_current++;
-            console.log(account_num_current + "=" + account_num);
             if (account_num_current == account_num) {
                 //全ての入力が終わったら
                 //見えなくさせる
@@ -202,8 +231,6 @@
         var sum = 0;
         var rarity;
         rarity = rarity_judg(num);
-        console.log("calccoin,rarity:" + rarity);
-        console.log("cardName: " + cards_name[num]);
         for (var i = card_level[num]; i < 14; i++) {
             switch (rarity) {
                 case 0:
@@ -222,7 +249,6 @@
                     sum += champion_coin[i - cards_min_level[CHAMPION]];
                     break;
             }
-            console.log("nowlevel : " + i + ", sum:" + sum);
         }
         return sum;
     }
@@ -231,8 +257,6 @@
         var sum = 0;
         var rarity;
         rarity = rarity_judg(num);
-        console.log("calcnum,rarity:" + rarity);
-        console.log("cardName: " + cards_name[num]);
         for (var i = card_level[num]; i < 14; i++) {
             switch (rarity) {
                 case 0:
@@ -251,25 +275,11 @@
                     sum += champion_num[i - cards_min_level[CHAMPION]];
                     break;
             }
-            console.log("nowlevel : " + i + ", sum:" + sum);
         }
-        /*var sub_sum = 0;
-        for (var i = 1; i < account_num; i++) {
-            sub_sum += card_num[i * cards_num[TOTAL] + num];
-        }
-        if (sum - sub_sum < 0) {
-            return 0;
-        } else {
-            return sum - sub_sum;
-        }*/
         sum = sum - card_num[num];
         return sum;
     }
     function set_calc() {
-        console.log("card_level");
-        console.log(card_level);
-        console.log("card_num:");
-        console.log(card_num);
         var tr1 = document.createElement("tr");
         var th1 = document.createElement("th");
         var th2 = document.createElement("th");
@@ -284,17 +294,6 @@
         tr1.appendChild(th4);
         list.appendChild(tr1);
         for (var i = 0; i < cards_num[TOTAL]; i++) {
-            console.log("i=" + i);
-            /*var input = document.createElement("input");
-            input.setAttribute("type", "checkbox");
-            input.setAttribute("name", "check_card");
-            var coin = calc_coin(i);
-            input.setAttribute("value", coin);
-            var num = calc_num(i);
-            var txt = document.createTextNode(cards_name[i] + "の必要枚数は" + num);
-            list.appendChild(input);
-            list.appendChild(txt);
-            list.appendChild(document.createElement('br'));*/
             var tr = document.createElement("tr");
             var td1 = document.createElement("td");
             input = document.createElement("input");
@@ -318,7 +317,6 @@
             } else {
                 num = num - sub_sum;
             }
-            console.log("card_num[j * cards_num[TOTAL] + i]=" + card_num[j * cards_num[TOTAL] + i] + ", sub_sum=" + sub_sum);
             td4.textContent = num;
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -332,11 +330,11 @@
                 var total_coin = 0;
                 $('[name="check_card"]:checked').each(function (index, element) {
                     total_coin += Number($(element).val());
-
                 });
                 $('.coin_display').text(total_coin);
-
             });
+
+
         });
 
 
@@ -352,12 +350,23 @@
             change_card_input();
         }
     }
+
     //rangeが変更されたとき
     get_card_level.addEventListener("input", function (e) {
         set_card_level.innerHTML = get_card_level.value;
+        var rangeValue = get_card_level.value;
+        var active = 15 * (rangeValue / 14) - 1;
+        rangeActive.style.width = active + "em";
+        //赤の位置
+        active = active + 1.5;
+        rangeBack.style.left = active + "em";
+        //赤の長さ
+        active = 15 * ((14 - rangeValue) / 14) + 0.1;
+        rangeBack.style.width = active + "em";
     });
+
     $(function () {
-        $("input").on("change", function () {
+        $('input[name= "check_card"]').on("change", function () {
             calc_sum_coin();
         });
         function calc_sum_coin() {
@@ -369,12 +378,39 @@
                 $(".coin_display").text(total_coin);
             });
         }
+
+
+
     });
+
 </script>
 <style>
     body {
         background: rgb(83, 98, 110);
-        color: rgb(64, 251, 43);
+        color: #fff6fc;
+    }
+
+    /*input[type="range"] {
+        -webkit-appearance: none;
+        background: #fc5180;
+        color: #2c76d2;
+        border-radius: 20px;
+
+    }*/
+
+    #rangeBack,
+    #rangeActive {
+        height: 8px;
+    }
+
+    #rangeBack {
+        background-color: #fc5180;
+        width: 3.3em;
+    }
+
+    #rangeActive {
+        background-color: #2c76d2;
+        width: 10.9em;
     }
 
     .sixteenthEm {
@@ -383,7 +419,6 @@
 
     #card_level_input {
         width: 18em;
-
     }
 
     td {
@@ -415,6 +450,14 @@
 
     #space {
         height: 5em;
+    }
+
+    .blue {
+        color: #2c76d2;
+    }
+
+    .red {
+        color: #fc5180;
     }
 </style>
 
