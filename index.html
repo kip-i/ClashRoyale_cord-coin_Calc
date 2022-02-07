@@ -10,12 +10,12 @@
 <body>
     <div class="container">
         <h2><span class="blue">Clash Royale </span><span class="red">カードコイン計算機</span></h2>
+        <p>カンストするために必要なカード枚数とコインが分ります.</p>
         <details>
             <summary>使い方</summary>
             <p>1. アカウント数を入力する.</p>
             <p>2. アカウントに対するカードのレベルと枚数を入力する.</p>
             <p>3. カンストしたいカードを選択する.</p>
-
         </details>
         <br>
         <div id="account_num_form">
@@ -64,26 +64,19 @@
                     <option value="13">
                     <option value="14">
                 </datalist>
-
                 <br>
-
                 <input id="card_num_input" type="number" class="sixteenthEm" placeholder="カードの枚数を入力してください."><br>
-
             </div>
         </div>
         <div class="coin_sum">
-            <table id="list">
-
-            </table>
+            <table id="list"></table>
             <div id="coin_content">
                 <div id="coin_content_sticky">
                     <p id="p_coin_display">必要コイン : <span class="coin_display"></span></p>
                 </div>
             </div>
-
         </div>
         <div id="space"></div>
-
     </div>
 </body>
 <script>
@@ -166,34 +159,28 @@
             //カードレベルのinput欄作成
             card_input.style.display = "block";
             set_card_level.style.display = "block";
+            // 要素の位置座標を取得
+            var clientRect = get_card_level.getBoundingClientRect();
+            // 画面の左端から、要素の左端までの距離
+            var x = clientRect.left;
+            // 画面の上端から、要素の上端までの距離
+            var y = clientRect.top;
+            console.log("input x: " + x + ", y: " + y);
+            change_locate(x, y);
+            change_card_input();
+            //rangeの位置から色のバーの位置変更
+            function change_locate(x, y) {
+                rangeActive.style.position = "absolute";
+                rangeActive.style.top = y + 55 + "px";
+                rangeActive.style.left = x + "px";
+                rangeBack.style.position = "absolute";
+                rangeBack.style.top = y + 55 + "px";
+                rangeBack.style.left = x + 186 + "px";
+                console.log("changeLocate x:" + x + ", y: " + y);
+            }
 
-
-            $(function () {
-                // 要素の位置座標を取得
-                var clientRect = get_card_level.getBoundingClientRect();
-                // 画面の左端から、要素の左端までの距離
-                var x = clientRect.left;
-                // 画面の上端から、要素の上端までの距離
-                var y = clientRect.top;
-                console.log("input x: " + x + ", y: " + y);
-                change_locate(x, y);
-                change_card_input();
-                //rangeの位置から色のバーの位置変更
-                function change_locate(x, y) {
-                    rangeActive.style.position = "absolute";
-                    rangeActive.style.top = y + 55 + "px";
-                    rangeActive.style.left = x + "px";
-                    rangeBack.style.position = "absolute";
-                    rangeBack.style.top = y + 55 + "px";
-                    rangeBack.style.left = x + 186 + "px";
-                    console.log("changeLocate x:" + x + ", y: " + y);
-                }
-
-
-            });
         }
     }
-
 
     //カード入力欄の変更
     function change_card_input() {
@@ -214,7 +201,6 @@
                 set_calc();
                 p_coin_display.style.display = "block";
             }
-
         }
     }
 
@@ -224,6 +210,7 @@
         var input = document.getElementById("all_input");
         input.style.display = "none";
     }
+
     //レア度の判定
     function rarity_judg(num) {
         var i = 0;
@@ -234,6 +221,7 @@
         }
         return i - 1;
     }
+
     //各カードの必要なコイン計算
     function calc_coin(num) {
         var sum = 0;
@@ -260,6 +248,7 @@
         }
         return sum;
     }
+
     //各カードの必要な枚数計算
     function calc_num(num) {
         var sum = 0;
@@ -287,6 +276,8 @@
         sum = sum - card_num[num];
         return sum;
     }
+
+    //計算機を作る
     function set_calc() {
         var tr1 = document.createElement("tr");
         var th1 = document.createElement("th");
@@ -336,7 +327,6 @@
                 tr.setAttribute("class", "blue");
             }
             list.appendChild(tr);
-
         }
         $(function () {
             $('[name="check_card"]').change(function () {
@@ -346,12 +336,9 @@
                 });
                 $('.coin_display').text(total_coin);
             });
-
-
         });
-
-
     }
+
     //カード入力欄から取得
     function get_card_num(e) {
         if (e.keyCode === 13) {
@@ -378,6 +365,7 @@
         rangeBack.style.width = active + "em";
     });
 
+    //チェックされたら必要コイン数を変更
     $(function () {
         $('input[name= "check_card"]').on("change", function () {
             calc_sum_coin();
@@ -391,9 +379,6 @@
                 $(".coin_display").text(total_coin);
             });
         }
-
-
-
     });
 
 </script>
@@ -402,7 +387,6 @@
         background: #161708;
         color: #fff6fc;
     }
-
 
     #rangeBack,
     #rangeActive {
